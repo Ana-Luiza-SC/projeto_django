@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciador de Tarefas</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #090D1F;
+            color: white;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 50px;
+            margin-top: 50px;
+            color: #FFF;
+        }
+
+        form {
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        input[type="text"], textarea {
+            width: 300px;
+            padding: 10px;
+            margin: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #4a235a;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #6c3483;
+        }
+
+        .tarefa-lista {
+            margin-top: 20px;
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .tarefa-item {
+            background-color: #1e2a47;
+            border: 1px solid #ccc;
+            padding: 15px;
+            margin: 10px auto;
+            width: 60%;
+            text-align: left;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .tarefa-item strong {
+            font-size: 18px;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .tarefa-item button {
+            font-size: 12px;
+            padding: 5px 10px;
+            background-color: #e74c3c;
+            border-radius: 3px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .tarefa-item button:hover {
+            background-color: #c0392b;
+        }
+
+    </style>
+</head>
+<body>
+
+    <h1>Gerenciador de Tarefas</h1>
+
+    <form method="POST">
+        {% csrf_token %}
+        <input type="text" name="titulo" placeholder="Título da tarefa" required>
+        <textarea name="descricao" placeholder="Descrição"></textarea><br>
+        <button type="submit">Adicionar Tarefa</button>
+    </form>
+
+    <ul class="tarefa-lista">
+        {% for tarefa in tarefas %}
+            <li class="tarefa-item">
+                <strong>{{ tarefa.titulo }}</strong>
+                <p>{{ tarefa.descricao }}</p>
+                {% if tarefa.concluida %}
+                    <p>[Concluída]</p>
+                {% endif %}
+                <form method="POST" action="{% url 'apagar_tarefa' tarefa.id %}">
+                    {% csrf_token %}
+                    <button type="submit">Apagar</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+
+</body>
+</html>
