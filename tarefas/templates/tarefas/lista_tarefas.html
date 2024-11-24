@@ -25,10 +25,24 @@
             margin-bottom: 20px;
         }
 
+        .form-group {
+            margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        label {
+            font-size: 16px;
+            margin-bottom: 5px;
+            text-align: left;
+            width: 300px;
+        }
+
         input[type="text"], textarea {
             width: 300px;
             padding: 10px;
-            margin: 5px;
+            margin: 5px 0;
             border-radius: 5px;
             border: 1px solid #ccc;
         }
@@ -74,16 +88,15 @@
         .tarefa-item button {
             font-size: 12px;
             padding: 5px 10px;
-            background-color: #e74c3c;
+            background-color: #4a235a;
             border-radius: 3px;
             border: none;
             cursor: pointer;
         }
 
         .tarefa-item button:hover {
-            background-color: #c0392b;
+            background-color: #6c3483;
         }
-
     </style>
 </head>
 <body>
@@ -92,8 +105,14 @@
 
     <form method="POST">
         {% csrf_token %}
-        <input type="text" name="titulo" placeholder="Título da tarefa" required>
-        <textarea name="descricao" placeholder="Descrição"></textarea><br>
+        <div class="form-group">
+            <label for="titulo">Título da tarefa</label>
+            <input type="text" id="titulo" name="titulo" placeholder="Título da tarefa" required>
+        </div>
+        <div class="form-group">
+            <label for="descricao">Descrição</label>
+            <textarea id="descricao" name="descricao" placeholder="Descrição"></textarea>
+        </div>
         <button type="submit">Adicionar Tarefa</button>
     </form>
 
